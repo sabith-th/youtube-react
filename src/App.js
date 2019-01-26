@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import HeaderNav from "./containers/HeaderNav/HeaderNav";
+import { Home } from "./containers/Home/Home";
 import { SideBar } from "./containers/SideBar/SideBar";
 
 class App extends Component {
@@ -8,6 +9,7 @@ class App extends Component {
       <React.Fragment>
         <HeaderNav />
         <SideBar />
+        <Home />
       </React.Fragment>
     );
   }
