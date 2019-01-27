@@ -1,5 +1,5 @@
 import React from "react";
-import { VideoGrid } from "../VideoGrid/VideoGrid";
+import { VideoGrid } from "../../components/VideoGrid/VideoGrid";
 import "./Home.scss";
 
 export class Home extends React.Component {
