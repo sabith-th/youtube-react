@@ -1,6 +1,7 @@
 import React from "react";
 import { RelatedVideos } from "../../components/RelatedVideos/RelatedVideos";
 import { Video } from "../../components/Video/Video";
+import { VideoMetadata } from "../../components/VideoMetadata/VideoMetadata";
 import "./Watch.scss";
 
 export class Watch extends React.Component {
@@ -8,12 +9,7 @@ export class Watch extends React.Component {
     return (
       <div className="watch-grid">
         <Video className="video" id="6ZfuNTqbHE8" />
-        <div
-          className="metadata"
-          style={{ width: "100%", height: "100px", background: "#F91112" }}
-        >
-          Metadata
-        </div>
+        <VideoMetadata className="metadata" viewCount={10000000} />
         <div
           className="video-info-box"
           style={{ width: "100%", height: "100px", background: "#BD10E0" }}
