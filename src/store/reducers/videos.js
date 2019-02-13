@@ -1,3 +1,4 @@
+import { createSelector } from "reselect";
 import { SUCCESS } from "../actions";
 import { MOST_POPULAR } from "../actions/video";
 
@@ -16,7 +17,6 @@ export default (state = initialState, action) => {
 };
 
 const reduceFetchMostPopularVideos = (response, prevState) => {
-  console.log("Response from youtube", response);
   const videoMap = response.items.reduce((accumulator, video) => {
     accumulator[video.id] = video;
     return accumulator;
@@ -39,3 +39,14 @@ const reduceFetchMostPopularVideos = (response, prevState) => {
     byId: { ...prevState.byId, ...videoMap }
   };
 };
+
+export const getMostPopularVideos = createSelector(
+  state => state.videos.byId,
+  state => state.videos.mostPopular,
+  (videosById, mostPopular) => {
+    if (!mostPopular || !mostPopular.items) {
+      return [];
+    }
+    return mostPopular.items.map(videoId => videosById[videoId]);
+  }
+);

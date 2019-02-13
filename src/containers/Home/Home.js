@@ -5,7 +5,7 @@ import * as videoActions from "../../store/actions/video";
 import { getYoutubeLibraryLoaded } from "../../store/reducers/api";
 import { SideBar } from "../SideBar/SideBar";
 import "./Home.scss";
-import { HomeContent } from "./HomeContent/HomeContent";
+import HomeContent from "./HomeContent/HomeContent";
 
 export class Home extends React.Component {
   render() {

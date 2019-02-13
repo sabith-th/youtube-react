@@ -4,21 +4,31 @@ import "./VideoPreview.scss";
 
 export class VideoPreview extends React.Component {
   render() {
+    const { video } = this.props;
+    if (!video) {
+      return <div />;
+    }
+
     const horizontal = this.props.horizontal ? "horizontal" : null;
+
     return (
       <div className={["video-preview", horizontal].join(" ")}>
         <div className="image-container">
-          <Image src="http://via.placeholder.com/210x118" />
+          <Image src={video.snippet.thumbnails.medium.url} />
           <div className="time-label">
-            <span>09:11</span>
+            <span>{video.contentDetails.duration}</span>
           </div>
         </div>
         <div className="video-info">
-          <div className="semi-bold show-max-two-lines">Video Title</div>
+          <div className="semi-bold show-max-two-lines">
+            {video.snippet.title}
+          </div>
           <div className="video-preview-metadata-container">
-            <div className="channel-title">Channel Title</div>
+            <div className="channel-title">{video.snippet.channelTitle}</div>
             <div>
-              <span>3.4M views • 2 days ago</span>
+              <span>
+                {video.statistics.viewCount} • {video.snippet.publishedAt}
+              </span>
             </div>
           </div>
         </div>
