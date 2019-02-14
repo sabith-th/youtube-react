@@ -1,71 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Video Grid renders with title prop 1`] = `
-<Fragment>
-  <VideoGridHeader
-    title="Trending"
-  />
-  <div
-    className="video-grid"
-  >
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-  </div>
-  <Divider />
-</Fragment>
-`;
+exports[`Video Grid renders with title prop 1`] = `<div />`;
 
-exports[`Video Grid renders without divider 1`] = `
-<Fragment>
-  <VideoGridHeader />
-  <div
-    className="video-grid"
-  >
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-  </div>
-</Fragment>
-`;
+exports[`Video Grid renders without divider 1`] = `<div />`;
 
-exports[`Video Grid renders without props 1`] = `
-<Fragment>
-  <VideoGridHeader />
-  <div
-    className="video-grid"
-  >
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-    <VideoPreview />
-  </div>
-  <Divider />
-</Fragment>
-`;
+exports[`Video Grid renders without props 1`] = `<div />`;
