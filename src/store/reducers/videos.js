@@ -75,7 +75,7 @@ const reduceFetchVideoCategories = (response, prevState) => {
 };
 
 export const getVideoCategoryIds = createSelector(
-  state => state.video.categories,
+  state => state.videos.categories,
   categories => Object.keys(categories || {})
 );
 
@@ -145,4 +145,14 @@ export const getVideosByCategory = createSelector(
       {}
     );
   }
+);
+
+export const videoCategoriesLoaded = createSelector(
+  state => state.videos.categories,
+  categories => Object.keys(categories || {}).length !== 0
+);
+
+export const videosByCategoryLoaded = createSelector(
+  state => state.videos.byCategory,
+  videosByCategory => Object.keys(videosByCategory || {}).length
 );
