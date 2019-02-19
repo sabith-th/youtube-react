@@ -4,7 +4,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { AppLayout } from "./components/AppLayout/AppLayout";
 import Home from "./containers/Home/Home";
-import { Watch } from "./containers/Watch/Watch";
+import Watch from "./containers/Watch/Watch";
 import { youtubeLibraryLoaded } from "./store/actions/api";
 
 const API_KEY = process.env.REACT_APP_YOUTUBE_DATA_V3_API_KEY;
