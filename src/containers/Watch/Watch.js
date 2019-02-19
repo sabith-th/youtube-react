@@ -18,4 +18,9 @@ export class Watch extends React.Component {
       </div>
     );
   }
+
+  getVideoId() {
+    const searchParams = new URLSearchParams(this.props.location.search);
+    return searchParams.get("v");
+  }
 }
