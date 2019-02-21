@@ -1,13 +1,26 @@
 import React from "react";
 import { Icon, Progress } from "semantic-ui-react";
+import { getShortNumberString } from "../../services/number/number-format";
 import "./Rating.scss";
 
 export const Rating = props => {
-  let progress = null;
-  const { likeCount, dislikeCount } = props;
-  if (likeCount && dislikeCount) {
-    const percent = 100 * (likeCount / (likeCount + dislikeCount));
-    progress = <Progress className="progress" percent={percent} size="tiny" />;
+  let rating = null;
+  let likeCount = props.likeCount !== 0 ? props.likeCount : null;
+  let dislikeCount = null;
+  if (props.likeCount && props.dislikeCount) {
+    const amountLikes = parseFloat(props.likeCount);
+    const amountDislikes = parseFloat(props.dislikeCount);
+    const percentPostiveRating =
+      100.0 * (amountLikes / (amountDislikes + amountLikes));
+    likeCount = getShortNumberString(amountLikes);
+    dislikeCount = getShortNumberString(amountDislikes);
+    rating = (
+      <Progress
+        className="progress"
+        percent={percentPostiveRating}
+        size="tiny"
+      />
+    );
   }
 
   return (
@@ -20,7 +33,7 @@ export const Rating = props => {
         <Icon name="thumbs down outline" />
         <span>{dislikeCount}</span>
       </div>
-      {progress}
+      {rating}
     </div>
   );
 };

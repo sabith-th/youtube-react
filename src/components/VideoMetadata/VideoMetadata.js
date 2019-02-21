@@ -4,14 +4,22 @@ import { Rating } from "../Rating/Rating";
 import "./VideoMetadata.scss";
 
 export const VideoMetadata = props => {
-  const viewCount = Number(props.viewCount).toLocaleString() || "";
+  if (!props.video || !props.video.statistics) {
+    return <div />;
+  }
+  const viewCount =
+    Number(props.video.statistics.viewCount).toLocaleString() || "";
+
   return (
     <div className="video-metadata">
-      <h3>Avengers: Infinity War Official Trailer</h3>
+      <h3>{props.video.snippet.title}</h3>
       <div className="video-stats">
         <span>{viewCount} views</span>
         <div className="video-actions">
-          <Rating likeCount={500000} dislikeCount={50000} />
+          <Rating
+            likeCount={props.video.statistics.likeCount}
+            dislikeCount={props.video.statistics.dislikeCount}
+          />
           <Button basic icon labelPosition="left">
             <Icon name="share" />
             Share
