@@ -5,7 +5,7 @@ import {
   MOST_POPULAR_BY_CATEGORY,
   VIDEO_CATEGORIES
 } from "../actions/video";
-import { WATCH_DETAILS } from "../actions/watch";
+import { VIDEO_DETAILS, WATCH_DETAILS } from "../actions/watch";
 import {
   SEARCH_LIST_RESPONSE,
   VIDEO_LIST_RESPONSE
@@ -30,6 +30,8 @@ export default (state = initialState, action) => {
       );
     case WATCH_DETAILS[SUCCESS]:
       return reduceWatchDetails(action.response, state);
+    case VIDEO_DETAILS[SUCCESS]:
+      return reduceVideoDetails(action.response, state);
     default:
       return state;
   }
@@ -201,3 +203,41 @@ const reduceRelatedVideosRequest = responses => {
     items: relatedVideoIds
   };
 };
+
+const reduceVideoDetails = (responses, prevState) => {
+  const videoResponses = responses.filter(
+    response => response.result.kind === VIDEO_LIST_RESPONSE
+  );
+  const parsedVideos = videoResponses.reduce((videoMap, response) => {
+    const video = response.result.items ? response.result.items[0] : null;
+    if (!video) {
+      return videoMap;
+    }
+    videoMap[video.id] = video;
+    return videoMap;
+  }, {});
+
+  return {
+    ...prevState,
+    byId: { ...prevState.byId, ...parsedVideos }
+  };
+};
+
+const getRelatedVideoIds = (state, videoId) => {
+  const related = state.videos.related ? state.videos.related[videoId] : null;
+  return related ? related.items : [];
+};
+
+export const getRelatedVideos = createSelector(
+  getRelatedVideoIds,
+  state => state.videos.byId,
+  (relatedVideoIds, videos) => {
+    if (relatedVideoIds) {
+      const relatedVideos = relatedVideoIds
+        .map(videoId => videos[videoId.videoId])
+        .filter(video => video);
+      return relatedVideos;
+    }
+    return [];
+  }
+);
