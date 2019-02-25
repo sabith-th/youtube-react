@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { getSearchParam } from "../../services/url";
 import { SUCCESS } from "../actions";
 import {
   MOST_POPULAR,
@@ -241,3 +242,12 @@ export const getRelatedVideos = createSelector(
     return [];
   }
 );
+
+export const getChannelId = (state, location, name) => {
+  const videoId = getSearchParam(location, name);
+  const video = state.videos.byId[videoId];
+  if (video) {
+    return video.snippet.channelId;
+  }
+  return null;
+};

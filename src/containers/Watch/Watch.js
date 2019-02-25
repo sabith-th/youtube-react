@@ -2,19 +2,20 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
+import { getSearchParam } from "../../services/url";
 import * as watchActions from "../../store/actions/watch";
 import { getYoutubeLibraryLoaded } from "../../store/reducers/api";
+import { getChannelId } from "../../store/reducers/videos";
 import WatchContent from "./WatchContent/WatchContent";
 
 export class Watch extends React.Component {
   render() {
     const videoId = this.getVideoId();
-    return <WatchContent videoId={videoId} />;
+    return <WatchContent videoId={videoId} channelId={this.props.channelId} />;
   }
 
   getVideoId() {
-    const searchParams = new URLSearchParams(this.props.location.search);
-    return searchParams.get("v");
+    return getSearchParam(this.props.location, "v");
   }
 
   componentDidMount() {
@@ -38,9 +39,10 @@ export class Watch extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
   return {
-    youtubeLibraryLoaded: getYoutubeLibraryLoaded(state)
+    youtubeLibraryLoaded: getYoutubeLibraryLoaded(state),
+    channelId: getChannelId(state, props.location, "v")
   };
 };
 
