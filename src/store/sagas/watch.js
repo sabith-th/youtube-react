@@ -6,7 +6,10 @@ import {
   buildRelatedVideosRequest,
   buildVideoDetailRequest
 } from "../api/youtube-api";
-import { SEARCH_LIST_RESPONSE } from "../api/youtube-response-types";
+import {
+  SEARCH_LIST_RESPONSE,
+  VIDEO_LIST_RESPONSE
+} from "../api/youtube-response-types";
 
 export function* watchWatchDetails() {
   while (true) {
@@ -30,13 +33,13 @@ export function* fetchWatchDetails(videoId, channelId) {
   try {
     const responses = yield all(requests.map(fn => call(fn)));
     yield put(watchActions.details.success(responses));
-    yield call(fetchVideoDetails, responses);
+    yield call(fetchVideoDetails, responses, channelId === null);
   } catch (error) {
     yield put(watchActions.details.failure(error));
   }
 }
 
-function* fetchVideoDetails(responses) {
+function* fetchVideoDetails(responses, shouldFetchChannelInfo) {
   const searchListResponse = responses.find(
     response => response.result.kind === SEARCH_LIST_RESPONSE
   );
@@ -47,6 +50,18 @@ function* fetchVideoDetails(responses) {
   const requests = relatedVideoIds.map(relatedVideoId => {
     return buildVideoDetailRequest.bind(null, relatedVideoId);
   });
+
+  if (shouldFetchChannelInfo) {
+    const videoDetailsResponse = responses.find(
+      response => response.result.kind === VIDEO_LIST_RESPONSE
+    );
+    const videos = videoDetailsResponse.result.items;
+    if (videos && videos.length) {
+      requests.push(
+        buildChannelRequest.bind(null, videos[0].snippet.channelId)
+      );
+    }
+  }
 
   try {
     const responses = yield all(requests.map(fn => call(fn)));

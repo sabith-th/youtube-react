@@ -2,6 +2,7 @@ import React from "react";
 import Linkify from "react-linkify";
 import { Button, Image } from "semantic-ui-react";
 import { getPublishedAtDateString } from "../../services/date/date-format";
+import { getShortNumberString } from "../../services/number/number-format";
 import "./VideoInfoBox.scss";
 
 export class VideoInfoBox extends React.Component {
@@ -21,10 +22,14 @@ export class VideoInfoBox extends React.Component {
   };
 
   render() {
-    if (!this.props.video) {
+    if (!this.props.video || !this.props.channel) {
       return <div />;
     }
 
+    const { channel } = this.props;
+    const buttonText = this.getSubscriberButtonText();
+    const channelThumbnail = channel.snippet.thumbnails.medium.url;
+    const channelTitle = channel.snippet.title;
     const descriptionParagraphs = this.getDescriptionParagraphs();
     const { descriptionTextClass, buttonTitle } = this.getConfig();
     const publishedAtString = getPublishedAtDateString(
@@ -33,16 +38,12 @@ export class VideoInfoBox extends React.Component {
 
     return (
       <div className="video-info-box">
-        <Image
-          className="channel-image"
-          src="http://via.placeholder.com/48x48"
-          circular
-        />
+        <Image className="channel-image" src={channelThumbnail} circular />
         <div className="video-info">
-          <div className="channel-name">Marvel Entertainment</div>
+          <div className="channel-name">{channelTitle}</div>
           <div className="video-publication-date">{publishedAtString}</div>
         </div>
-        <Button color="youtube">SUBSCRIBE 10M</Button>
+        <Button color="youtube">{buttonText}</Button>
         <div className="video-description">
           <div className={descriptionTextClass}>{descriptionParagraphs}</div>
           <Button compact onClick={this.onToggleCollapseButtonClick}>
@@ -78,5 +79,12 @@ export class VideoInfoBox extends React.Component {
         <Linkify>{paragraph}</Linkify>
       </p>
     ));
+  }
+
+  getSubscriberButtonText() {
+    const { channel } = this.props;
+    const parsedSubscriberCount = Number(channel.statistics.subscriberCount);
+    const subscriberCount = getShortNumberString(parsedSubscriberCount);
+    return `Subscribe ${subscriberCount}`;
   }
 }
