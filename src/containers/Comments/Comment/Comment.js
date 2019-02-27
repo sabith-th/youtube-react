@@ -4,18 +4,26 @@ import { Rating } from "../../../components/Rating/Rating";
 import "./Comment.scss";
 
 export const Comment = props => {
+  if (!props.comment) {
+    return <div />;
+  }
+
+  const topLevelComment = props.comment.snippet.topLevelComment;
+  const {
+    authorProfileImageUrl,
+    authorDisplayName,
+    textOriginal,
+    likeCount
+  } = topLevelComment.snippet;
+
   return (
     <div className="comment">
-      <Image
-        className="user-image"
-        src="http://via.placeholder.com/48x48"
-        circular
-      />
+      <Image className="user-image" src={authorProfileImageUrl} circular />
       <div>
-        <div className="user-name">User name</div>
-        <span>Comment Text</span>
+        <div className="user-name">{authorDisplayName}</div>
+        <span>{textOriginal}</span>
         <div className="comment-actions">
-          <Rating likeCount={10} />
+          <Rating likeCount={likeCount} />
           <Button size="mini" compact>
             REPLY
           </Button>
