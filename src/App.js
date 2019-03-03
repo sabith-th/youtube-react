@@ -4,6 +4,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { AppLayout } from "./components/AppLayout/AppLayout";
 import Home from "./containers/Home/Home";
+import Trending from "./containers/Trending/Trending";
 import Watch from "./containers/Watch/Watch";
 import { youtubeLibraryLoaded } from "./store/actions/api";
 
@@ -18,6 +19,7 @@ class App extends Component {
             path="/watch"
             render={() => <Watch key={this.props.location.key} />}
           />
+          <Route path="/feed/trending" component={Trending} />
           <Route path="/" component={Home} />
         </Switch>
       </AppLayout>

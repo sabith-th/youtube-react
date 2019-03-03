@@ -261,3 +261,18 @@ export const getAmountComments = createSelector(
     return 0;
   }
 );
+
+const getMostPopular = state => state.videos.mostPopular;
+
+export const getMostPopularVideosNextPageToken = createSelector(
+  getMostPopular,
+  mostPopular => mostPopular.nextPageToken
+);
+
+export const allMostPopularVideosLoaded = createSelector(
+  [getMostPopular],
+  mostPopular => {
+    const amountFetchedItems = mostPopular.items ? mostPopular.items.length : 0;
+    return amountFetchedItems === mostPopular.totalResults;
+  }
+);
