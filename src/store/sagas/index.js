@@ -1,5 +1,6 @@
 import { all, call, fork, put } from "redux-saga/effects";
 import { watchCommentThread } from "./comment";
+import { watchSearchForVideos } from "./search";
 import {
   watchMostPopularVideos,
   watchMostPopularVideosByCategory,
@@ -13,7 +14,8 @@ export default function*() {
     fork(watchVideoCategories),
     fork(watchMostPopularVideosByCategory),
     fork(watchWatchDetails),
-    fork(watchCommentThread)
+    fork(watchCommentThread),
+    fork(watchSearchForVideos)
   ]);
 }
 
