@@ -1,6 +1,7 @@
 .watch-grid {
   display: grid;
-  grid-template: auto auto auto 1fr / auto 402px;
+  grid-template: auto auto auto 1fr / minmax(0, 1280px) 402px;
+  justify-content: center;
   padding-top: 24px;
   column-gap: 24px;
   grid-row-gap: 8px;
@@ -30,5 +31,12 @@
   .related-videos {
     grid-column: 2 / 3;
     grid-row: 1 / span 4;
+  }
+}
+
+@media (max-width: 1754px) {
+  .watch-grid {
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }

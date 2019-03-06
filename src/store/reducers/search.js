@@ -1,10 +1,12 @@
-import { SUCCESS } from "../actions";
+import { REQUEST, SUCCESS } from "../actions";
 import { SEARCH_FOR_VIDEOS } from "../actions/search";
 
 export default (state = {}, action) => {
   switch (action.type) {
     case SEARCH_FOR_VIDEOS[SUCCESS]:
       return reduceSearchForVideos(action.response, action.searchQuery, state);
+    case SEARCH_FOR_VIDEOS[REQUEST]:
+      return action.nextPageToken ? state : {};
     default:
       return state;
   }
